@@ -1,0 +1,41 @@
+# Flagsmith pods are now starting in the cluster #
+
+See documentation at https://artifacthub.io/packages/helm/flagsmith/flagsmith/{{ .Chart.Version }}
+for more configuration options.
+
+To access Flagsmith using port-forwarding, run:
+
+kubectl -n {{ .Release.Namespace }} port-forward svc/{{ include "flagsmith.fullname" . }}-frontend 8080:{{ .Values.service.frontend.port }}
+
+Then access http://localhost:8080 in a browser.
+
+{{ if not (and .Values.ingress.frontend.enabled .Values.ingress.api.enabled) }}
+
+{{- $noIngressFor := (list) -}}
+{{- if not .Values.ingress.api.enabled -}}{{- $noIngressFor = append $noIngressFor "api" -}}{{- end -}}
+{{- if not .Values.ingress.frontend.enabled -}}{{- $noIngressFor = append $noIngressFor "frontend" -}}{{- end -}}
+{{- $commaParts := (slice $noIngressFor 0 (sub (len $noIngressFor) 1)) -}}
+{{- $andPart := (last $noIngressFor) -}}
+{{- $stringParts := (compact (list (join ", " $commaParts) $andPart)) -}}
+## Ingress not enabled for {{ join " and " $stringParts }} ##
+
+See documentation at https://artifacthub.io/packages/helm/flagsmith/flagsmith/{{ .Chart.Version }}#ingress-configuration
+for information about how to gain web access to the application.
+
+{{- end }}
+
+{{- if not .Values.api.secretKey }}
+
+######################################
+##### Warning: no secret key set #####
+######################################
+
+No secret key is set, a new one will be randomly generated at each
+deployment. For production systems, it is strongly recommended to
+generate a large random value and set it at `api.secretKey`. It must
+be kept secret.
+
+See https://docs.flagsmith.com/deployment/locally-api#creating-a-secret-key
+{{- end }}
+
+--------------------------------------
