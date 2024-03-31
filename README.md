@@ -7,7 +7,8 @@ This repository contains a collection of Helm charts for various applications. H
 - [airbyte](link-to-chart-1)
 - [cerbos](link-to-chart-2)
 - [elasticsearch](link-to-chart-3)
-- [flagsmith](link-to-chart-3)
+- [flagsmith](link-to-chart-4)
+- [zammad](link-to-chart-5)
 - ...
 
 ## Usage
@@ -47,4 +48,3 @@ Feel free to contribute to this repository! Contributions are welcome and encour
 5. Open a Pull Request (PR) in this repository, describing your changes and the reasoning behind them.
 
 Please ensure that your contributions adhere to the guidelines and best practices for Helm chart development. If you have any questions or need assistance, feel free to open an issue in this repository.
-
